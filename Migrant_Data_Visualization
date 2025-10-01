@@ -1,0 +1,134 @@
+> ⚠️ **Note:** This notebook uses **simulated / anonymized data** similar in structure to the real CBP-One dataset.  
+> Real data cannot be shared due to privacy and security restrictions.
+
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Migrant Data Visualization & Accessibility Study\n",
+    "\n",
+    "Example notebook demonstrating data cleaning, analysis, and visualization.\n",
+    "\n",
+    "_Note: This uses simulated data similar in structure to real CBP-One data but anonymized for privacy._"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Import libraries\n",
+    "import pandas as pd\n",
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "# For reproducibility\n",
+    "import numpy as np\n",
+    "np.random.seed(42)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Simulated migrant entry data\n",
+    "n = 200\n",
+    "data = pd.DataFrame({\n",
+    "    'PortOfEntry': np.random.choice(['Laredo', 'Nogales', 'San Ysidro', 'El Paso'], size=n),\n",
+    "    'WaitDays': np.random.poisson(lam=10, size=n),\n",
+    "    'Outcome': np.random.choice(['Admitted', 'Pending', 'Denied'], size=n, p=[0.6,0.3,0.1]),\n",
+    "    'TravelGroupSize': np.random.randint(1,6,size=n)\n",
+    "})\n",
+    "data.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Data Cleaning\n",
+    "- Standardizing column names\n",
+    "- Checking for missing values\n",
+    "- Converting categorical variables"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "data.columns = data.columns.str.lower()\n",
+    "print(data.isna().sum())\n",
+    "\n",
+    "# Example: ensure port names are consistent\n",
+    "data['portofentry'] = data['portofentry'].str.title()\n",
+    "data.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Exploratory Analysis\n",
+    "Visualize average wait time by port of entry and outcomes distribution."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "avg_wait = data.groupby('portofentry')['waitdays'].mean().sort_values()\n",
+    "\n",
+    "plt.figure(figsize=(8,5))\n",
+    "avg_wait.plot(kind='bar', color='steelblue')\n",
+    "plt.title('Average Wait Time (Days) by Port of Entry')\n",
+    "plt.ylabel('Average Wait Days')\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "outcome_counts = data['outcome'].value_counts()\n",
+    "plt.figure(figsize=(6,6))\n",
+    "plt.pie(outcome_counts, labels=outcome_counts.index, autopct='%1.1f%%', colors=['#66b3ff','#99ff99','#ff9999'])\n",
+    "plt.title('Outcome Distribution')\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Insights\n",
+    "- Ports show different average wait times; e.g., [example result will vary by random seed].\n",
+    "- Majority of travelers in this mock data were admitted, but a significant pending group exists.\n",
+    "\n",
+    "This workflow demonstrates how raw field data can be cleaned, summarized, and visualized to inform safer and more efficient port-of-entry planning."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "name": "python",
+   "version": "3.11"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
