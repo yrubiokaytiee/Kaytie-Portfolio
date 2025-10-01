@@ -1,0 +1,18 @@
+# Sakila ETL & Data Warehouse Project
+
+**Tech:** MySQL, Python, ETL workflows, data modeling, visualization
+
+**Overview:**  
+For my Data Science Systems course, I built a full ETL pipeline and analytics warehouse using the open-source Sakila film rental database.
+
+**What I did:**
+- Designed and implemented an ETL workflow to extract, clean, and load rental and customer data into a MySQL database.
+- Modeled the data into star schema tables optimized for analytics.
+- Wrote SQL queries to calculate KPIs such as most rented films, rental revenue by category, and customer segmentation.
+- Created visual dashboards to present insights on film rental patterns and store performance.
+
+**Key Skills:**  
+ETL design, SQL optimization, data warehouse modeling, Python scripting, visualization.
+
+**Impact:**  
+Demonstrated ability to handle real-world data pipelines, transform raw data into analytics-ready formats, and communicate findings effectively.
